@@ -1,22 +1,13 @@
-import * as express from "express";
-import * as cors from "cors";
-import * as dotenv from "dotenv";
-import { healthCheckRoutes } from "./adapters/http/routes/healthCheck.routes";
+import { App } from "./App";
+import { WinstonLogger } from "./adapters/logger/WinstonLogger";
+import { Config } from "./config/config";
 
-dotenv.config();
+const app = new App().server;
+const config = new Config();
+const logger = new WinstonLogger();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(express.json());
-app.use(cors());
-
-app.use(healthCheckRoutes);
-
-app.get("*", (req: express.Request, res: express.Response) => {
-    res.status(404).json({ message: "Page not found" });
-});
+const PORT = config.getAppPort();
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    logger.info(`Server is running on port ${PORT}`);
 });
