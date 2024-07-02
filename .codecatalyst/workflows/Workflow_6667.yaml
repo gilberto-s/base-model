@@ -1,0 +1,62 @@
+Name: Workflow_6667
+Compute:
+  Type: EC2
+SchemaVersion: "1.0"
+
+# Optional - Set automatic triggers.
+Triggers:
+  - Type: PUSH
+    Branches:
+      - develop
+Actions:
+  Build_55:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/build@v1.0.0
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Optional
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+      Variables:
+        - Name: NODE_ENV
+          Value: development
+        - Name: TZ
+          Value: America/Sao_Paulo
+        - Name: PORT
+          Value: "80"
+        - Name: LOGGER
+          Value: MODEL
+        - Name: LOGLEVEL
+          Value: DEBUG
+        - Name: CORS_ORIGIN
+          Value: "*"
+        - Name: CONTENT_SECURITY_POLICY_SCRIPTSRC
+          Value: "*.cloudfront.net"
+        - Name: CONTENT_SECURITY_POLICY_STYLESRC
+          Value: "*.cloudfront.net"
+        - Name: API_TOKEN
+          Value: 3a440179-315d-4574-810d-af1273b7efb4
+        - Name: JWT_SECRET
+          Value: 0ad68580-d32e-4e99-b674-44415f9d59d2
+        - Name: ACCESS_HOST
+          Value: http://54.81.3.236:5000
+        - Name: ACCESS_TOKEN
+          Value: 3a440179-315d-4574-810d-af1273b7efb4
+    Outputs:
+      # Optional; Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: true
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+    # Defines the action's properties.
+    Configuration:
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: npm run test
+      Container:
+        Registry: CODECATALYST
+        Image: CodeCatalystLinux_x86_64:2024_03
+    Compute:
+      Type: EC2
+    Environment:
+      Name: develop
