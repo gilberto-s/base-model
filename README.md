@@ -1,1 +1,1 @@
-### module-stand
+### Base model using hexagonal architecture 
