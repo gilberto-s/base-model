@@ -35,13 +35,13 @@ Actions:
         - Name: CONTENT_SECURITY_POLICY_STYLESRC
           Value: "*.cloudfront.net"
         - Name: API_TOKEN
-          Value: 3a440179-315d-4574-810d-af1273b7efb4
+          Value: ${Secrets.API_TOKEN}
         - Name: JWT_SECRET
-          Value: 0ad68580-d32e-4e99-b674-44415f9d59d2
+          Value: ${Secrets.JWT_SECRET}
         - Name: ACCESS_HOST
           Value: http://54.81.3.236:5000
         - Name: ACCESS_TOKEN
-          Value: 3a440179-315d-4574-810d-af1273b7efb4
+          Value: ${Secrets.ACCESS_TOKEN}
     Outputs:
       # Optional; Automatically discover reports for popular test frameworks
       AutoDiscoverReports:
@@ -52,11 +52,11 @@ Actions:
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
+        - Run: cd src/gssdev/baseapi/base-model/code
+        - Run: npm install
         - Run: npm run test
       Container:
         Registry: CODECATALYST
         Image: CodeCatalystLinux_x86_64:2024_03
-    Compute:
-      Type: EC2
     Environment:
       Name: develop
