@@ -52,7 +52,7 @@ Actions:
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
-        - Run: cd src/gssdev/baseapi/base-model/code
+        - Run: cd code
         - Run: npm install
         - Run: npm run test
       Container:
