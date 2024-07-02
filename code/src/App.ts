@@ -6,6 +6,7 @@ import routes from "./adapters/http/routes/routes";
 import { Config } from "./config/config";
 import { LogLevel } from "./core/enums/LogLevel";
 import { WinstonLogger } from "./adapters/logger/WinstonLogger";
+import { errorHandler } from "./adapters/http/middlewares/ErrorHandler";
 
 export class App {
     server:express.Express;
@@ -20,6 +21,7 @@ export class App {
         this.logLevel = LogLevel.INFO;
         this.middlewares();
         this.routes();
+        this.errorHandlerMiddleware();
     }
 
     middlewares(){
@@ -55,5 +57,9 @@ export class App {
 
     routes(){
         this.server.use(routes);
+    }
+
+    errorHandlerMiddleware(){
+        this.server.use(errorHandler);
     }
 }
